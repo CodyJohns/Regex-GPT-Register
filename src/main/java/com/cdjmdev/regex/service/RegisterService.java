@@ -12,21 +12,21 @@ public class RegisterService {
 		this.factory = factory;
 	}
 
-	public RegisterController.RegisterResponse register(String id, String password) {
+	public RegisterController.RegisterResponse register(RegisterController.RegisterRequest request) {
 
 		RegisterController.RegisterResponse response = new RegisterController.RegisterResponse();
 
 		User user;
 
 		try {
-			factory.getUserDAO().getByEmail(id);
+			factory.getUserDAO().getByEmail(request.id);
 
 			response.message = "User already exists with that email. " +
 				"If you previously logged in using Google, please do so again using that method of login.";
 			response.status = 409;
 			return response;
 		} catch(NullPointerException e) {
-			user = new User("", "", password, id);
+			user = new User("", "", request.password, request.id);
 		}
 
 		factory.getUserDAO().createNew(user);

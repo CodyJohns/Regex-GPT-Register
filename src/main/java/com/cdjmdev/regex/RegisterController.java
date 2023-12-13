@@ -27,7 +27,7 @@ public class RegisterController {
 
     public RegisterResponse handleRequest(RegisterRequest request) {
         try {
-            return service.register(request.id, request.password);
+            return service.register(request);
         } catch (Exception e) {
             RegisterResponse response = new RegisterResponse();
             response.status = 500;
