@@ -88,6 +88,28 @@ public class RegisterControllerTest {
     }
 
     @Test
+    @DisplayName("Test register fields empty")
+    void testRegisterFieldsEmpty() {
+
+        Mockito.when(uDAO.getByEmail(Mockito.any())).thenThrow(NullPointerException.class);
+
+        RegisterService service = new RegisterService(dFactory);
+
+        RegisterController.RegisterRequest request = new RegisterController.RegisterRequest();
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.register(request);
+        });
+
+        request.id = "";
+        request.password = "";
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.register(request);
+        });
+    }
+
+    @Test
     @DisplayName("Test register user already exists")
     void testRegisterUserAlreadyExists() {
 

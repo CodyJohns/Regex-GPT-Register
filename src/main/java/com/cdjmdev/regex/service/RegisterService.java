@@ -14,6 +14,9 @@ public class RegisterService {
 
 	public RegisterController.RegisterResponse register(RegisterController.RegisterRequest request) {
 
+		if(request.id == null || request.id.isBlank() || request.password == null || request.password.isBlank())
+			throw new IllegalArgumentException("Fields cannot be blank");
+
 		RegisterController.RegisterResponse response = new RegisterController.RegisterResponse();
 
 		User user;
